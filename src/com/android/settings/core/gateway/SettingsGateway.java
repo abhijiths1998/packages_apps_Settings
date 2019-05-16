@@ -138,8 +138,6 @@ import com.android.settings.wifi.calling.WifiCallingSettings;
 import com.android.settings.wifi.p2p.WifiP2pSettings;
 import com.android.settings.wifi.tether.WifiTetherSettings;
 import com.android.settings.custom.ambient.history.AmbientPlayHistory;
-import com.android.settings.livedisplay.LiveDisplaySettings;
-import com.CTextras.settings.ExtraSettings;
 
 public class SettingsGateway {
 
@@ -267,10 +265,6 @@ public class SettingsGateway {
             ToggleBackupSettingFragment.class.getName(),
             PreviouslyConnectedDeviceDashboardFragment.class.getName(),
             AmbientPlayHistory.class.getName(),
-
-            LiveDisplaySettings.class.getName(),
-            ExtraSettings.class.getName(),
-
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
