@@ -20,7 +20,8 @@
         android:title="@*android:string/live_display_title">
 
     <PreferenceCategory
-        android:key="live_display_options">
+        android:key="live_display_options"
+        android:title="@*android:string/live_display_title">
 
         <!-- Color profile -->
         <ListPreference

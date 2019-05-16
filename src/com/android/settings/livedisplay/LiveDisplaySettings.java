@@ -34,8 +34,7 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
-
-import android.provider.SearchIndexableResource;
+import com.android.settings.search.SearchIndexableRaw;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
@@ -403,7 +402,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements I
         @Override
         public List<String> getNonIndexableKeys(Context context) {
             final LiveDisplayConfig config = LiveDisplayManager.getInstance(context).getConfig();
-            final LineageHardwareManager hardwareManager = LineageHardwareManager.getInstance(context);
             final List<String> result = new ArrayList<String>();
 
             if (!config.hasFeature(FEATURE_DISPLAY_MODES)) {
@@ -424,20 +422,33 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements I
             if (!config.hasFeature(FEATURE_PICTURE_ADJUSTMENT)) {
                 result.add(KEY_PICTURE_ADJUSTMENT);
             }
-            if (!hardwareManager.isSupported(LineageHardwareManager.FEATURE_READING_ENHANCEMENT)) {
+            if (!config.hasFeature(FEATURE_READING_ENHANCEMENT)) {
                 result.add(KEY_LIVE_DISPLAY_READING_ENHANCEMENT);
             }
             return result;
         }
 
         @Override
-        public List<SearchIndexableResource> getXmlResourcesToIndex(Context context,
-                boolean enabled) {
-            final ArrayList<SearchIndexableResource> result = new ArrayList<>();
-            final SearchIndexableResource sir = new SearchIndexableResource(context);
-            sir.xmlResId = R.xml.livedisplay;
-            result.add(sir);
-            return result;
+        public List<SearchIndexableRaw> getRawDataToIndex(Context context, boolean enabled) {
+            final LiveDisplayConfig config = LiveDisplayManager.getInstance(context).getConfig();
+            final List<String> result = new ArrayList<>();
+
+            // Add keywords for supported color profiles
+            if (config.hasFeature(FEATURE_DISPLAY_MODES)) {
+                DisplayMode[] modes = LineageHardwareManager.getInstance(context).getDisplayModes();
+                if (modes != null && modes.length > 0) {
+                    for (DisplayMode mode : modes) {
+                        result.add(ResourceUtils.getLocalizedString(
+                                context.getResources(), mode.name, COLOR_PROFILE_TITLE));
+                    }
+                }
+            }
+            final SearchIndexableRaw raw = new SearchIndexableRaw(context);
+            raw.entries = TextUtils.join(" ", result);
+            raw.key = KEY_LIVE_DISPLAY_COLOR_PROFILE;
+            raw.title = context.getString(R.string.live_display_color_profile_title);
+            raw.rank = 2;
+            return Collections.singletonList(raw);
         }
     };
 }
