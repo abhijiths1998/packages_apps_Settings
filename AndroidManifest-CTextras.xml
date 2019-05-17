@@ -25,7 +25,7 @@
 <!-- ctosp settings -->
         <activity android:name=".Settings$ExtraSettingsActivity"
                   android:label="@string/ctosp_settings_title"
-                  android:icon="@drawable/ic_homepage_ctosp"
+                  android:icon="@drawable/ic_homepage_CTextras"
                   android:taskAffinity="com.android.settings">
             <intent-filter android:priority="-1">
                 <action android:name="com.android.settings.action.SETTINGS" />
