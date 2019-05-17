@@ -39,7 +39,7 @@ import com.android.settings.security.LockscreenDashboardFragment;
 import com.android.settings.security.SecuritySettings;
 import com.android.settings.system.SystemDashboardFragment;
 import com.android.settingslib.drawer.CategoryKey;
-import com.CTextra.settings.ExtraSettings;
+import com.CTextras.settings.ExtraSettings;
 import java.util.Map;
 
 /**
