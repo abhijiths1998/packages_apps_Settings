@@ -17,7 +17,6 @@
 package com.android.settings;
 
 import android.os.Bundle;
-
 import com.android.settings.enterprise.EnterprisePrivacySettings;
 
 /**
